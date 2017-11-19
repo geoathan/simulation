@@ -29,8 +29,8 @@ if (options.convection_nat)
     conv_tabl=zeros(rubber.nodes,1);
     %Q1=heat_transfer.convection(2,2)*heat_transfer.convection(2,1)*(heat_t
     %ransfer.T_inf-P(1)); % heat transfer from rubber to air by natural convection
-    for i = heat_transfer.convection2.node_start : (heat_transfer.convection2.node_start + heat_transfer.convection2.nodes)
-        q_dot_node=heat_transfer.convection2.h*(rubber.node_exposed_area/heat_transfer.convection2.nodes)*(heat_transfer.T_inf-P(i));%q_dot_node= h * A_node * (T-Tinf)/dt
+    for i = heat_transfer.convection2.node_start : heat_transfer.convection2.node_end
+        q_dot_node=heat_transfer.convection2.h*(rubber.node_exposed_area)*(heat_transfer.T_inf-P(i));%q_dot_node= h * A_node * (T-Tinf)/dt
         conv_tabl(i,1)= q_dot_node/(rubber.cp*rubber.node_mass); %q_dot_node = m_node*cp*deltaT -> deltaT=q_dot_node/(m_node*cp)
     end
     T_dot=T_dot+conv_tabl;
@@ -38,8 +38,8 @@ end
 
 if (options.convection_for)
     conv_tabl=zeros(rubber.nodes,1);
-    for i = heat_transfer.convection1.node_start : (heat_transfer.convection1.node_start + heat_transfer.convection1.nodes)
-        q_dot_node=heat_transfer.convection1.h*(rubber_node_exposed_area/heat_transfer.convection1.nodes)*(heat_transfer.T_inf-P(i));%q_dot_node = h * A_node * (T-Tinf)
+    for i = heat_transfer.convection1.node_start : heat_transfer.convection1.node_end
+        q_dot_node=heat_transfer.convection1.h*(rubber.node_exposed_area)*(heat_transfer.T_inf-P(i));%q_dot_node = h * A_node * (T-Tinf)
         conv_tabl(i,1)= q_dot_node/(rubber.cp*rubber.node_mass); %q_dot_node = m_node*cp*deltaT
     end
     T_dot=T_dot+conv_tabl;
