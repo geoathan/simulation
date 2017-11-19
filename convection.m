@@ -3,7 +3,6 @@ classdef convection
     %   Detailed explanation goes here
     
     properties
-        area % area for which the heat transfer takes place
         h    % convection coefficient
         L1   % length with respect to the top of where the heat transfer starts being applied in 1D simulation
         L2   % length with respect to the top of where the heat transfer stops being applied in 1D simulation
@@ -14,11 +13,11 @@ classdef convection
     end
     
     methods
-        function obj = convection( input_area, input_h, input_L1, input_L2)
+        function obj = convection(  input_h, input_L1, input_L2)
             if ((input_L2-input_L1)<0)
                 display ('L1 cannot be larger than L2')
             else
-                obj.area=input_area;
+                
                 obj.h=input_h;
                 obj.L1=input_L1;
                 obj.L2=input_L2;

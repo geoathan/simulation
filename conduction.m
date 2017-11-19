@@ -6,7 +6,6 @@ classdef conduction
     %   used for one dimensional simulation.
     
     properties
-        area % area for which the heat transfer takes place
         L1   % length with respect to the top of where the heat transfer starts being applied in 1D simulation
         L2   % length with respect to the top of where the heat transfer stops being applied in 1D simulation
         L    % total length where the convection is applied in 1D
@@ -19,8 +18,7 @@ classdef conduction
     end
     
     methods
-        function obj = conduction( input_area, input_L1, input_L2 , mode , input)
-            obj.area=input_area;
+        function obj = conduction(input_L1, input_L2 , mode , input)
             obj.L1=input_L1;
             obj.L2=input_L2;
             obj.L=input_L2-input_L1;
