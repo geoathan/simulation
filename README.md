@@ -1,4 +1,1 @@
-This is a thermal simulation script for matlab
-The rubber is simulated as a one dimensional object in the profile direction
-
-Je jesh je je
+This is the test branch
