@@ -1,5 +1,7 @@
+
+
 This is a thermal simulation script for matlab
 The rubber is simulated as a one dimensional object in the profile direction
 
 Now testing git functionality from laptop...
-test on which branch will it go
+
