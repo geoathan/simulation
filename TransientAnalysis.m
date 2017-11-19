@@ -7,7 +7,7 @@ clc
 options.convection_nat = false; % set true for natural convection
 options.convection_for = true; % set true for forced convection
 options.conduction_ver = true; % set true for vertebrae conduction
-options.conduction_windshield = false; % set true for windshied conduction
+options.conduction_windshield = true; % set true for windshied conduction
 
 %temperatures
 heat_transfer.T_inf = 0; % [C] ambient temperature
@@ -17,11 +17,11 @@ heat_transfer.T_rubber_init = -1 ; % [C] initial temperature of rubber
 heat_transfer.T_windshield=4; % [C] temperature of the windshield
 
 %simulation_object(length,t,delta_x,cp,k_conduction,rho)
-rubber = simulation_object(0.01,0.005,0.0005,2.1,0.14,1100);
+rubber = simulation_object(0.01,0.005,0.0005,2100,0.16,1100);
 
 sim_time=2000; % [s] 
 
-heat_transfer.convection1 = convection(30,0.001,0.002,rubber.nodes,rubber.length);%   convection1 = forced convection    
+heat_transfer.convection1 = convection(30,0.001,0.007,rubber.nodes,rubber.length);%   convection1 = forced convection    
 heat_transfer.convection2 = convection(11,0.001,0.002,rubber.nodes,rubber.length);%   convection2 = natural convection 
 
 heat_transfer.conduction1 = conduction(0.001,0.003,true,heat_transfer.T_source,rubber.nodes,rubber.length); % conduction from vertebrae

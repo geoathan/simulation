@@ -38,7 +38,7 @@ classdef simulation_object
     mass; %[kg]
     
     %material properties
-    cp; % specific heat [kj/kg*K]
+    cp; % specific heat [j/kg*K] !!!!
     k_conduction; % [W/mK]
     rho; % material density [kg/m^3]
     alpha; % alpha = k_conduction/(cp*rho)
@@ -55,7 +55,7 @@ classdef simulation_object
             obj.cp = cp;
             obj.k_conduction = k_conduction;
             obj.rho = rho;
-            obj.alpha=k_conduction/(cp*1000*rho);
+            obj.alpha=k_conduction/(cp*rho);
             obj.thickness=t;
             obj.length=length;
             obj.exposed_area= 2*length*delta_x;
