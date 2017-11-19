@@ -1,12 +1,9 @@
 classdef conduction
     %Conduction creates a 'conduction' object
     %   A conduction object has the necessary parameters to define a
-    %   conduction boundary condition. The 'area' parameter is used only
-    %   when we use zero dimensional simulation. The other paremeters are
-    %   used for one dimensional simulation.
+    %   conduction boundary condition.
     
     properties
-        area % area for which the heat transfer takes place
         L1   % length with respect to the top of where the heat transfer starts being applied in 1D simulation
         L2   % length with respect to the top of where the heat transfer stops being applied in 1D simulation
         L    % total length where the convection is applied in 1D
@@ -19,24 +16,19 @@ classdef conduction
     end
     
     methods
-        function obj = conduction( input_area, input_L1, input_L2 , mode , input)
-            obj.area=input_area;
+        function obj = conduction(input_L1, input_L2 , mode , input, nodes, total_length)
             obj.L1=input_L1;
             obj.L2=input_L2;
             obj.L=input_L2-input_L1;
             obj.mode=mode;
-            
+            obj.node_start = round((input_L1/total_length)*nodes);
+            obj.nodes = round(((input_L2-input_L1)/total_length)*nodes);
+            obj.node_end = round((input_L2/total_length)*nodes);
             if mode
                 obj.T = input;
             else
                 obj.Q =input;
             end
-        end
-        
-        function obj = calc_nodes(obj,nodes,total_length)
-            obj.node_start = round((obj.L1/total_length)*nodes);
-            obj.nodes = round((obj.L/total_length)*nodes);
-            obj.node_end = obj.node_start + obj.nodes;  
         end
         
     end
