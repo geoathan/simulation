@@ -7,7 +7,7 @@ clc
 options.convection_nat = false; % set true for natural convection
 options.convection_for = true; % set true for forced convection
 options.conduction_ver = true; % set true for vertebrae conduction
-options.conduction_windshield = true; % set true for windshied conduction
+options.conduction_windshield = false; % set true for windshied conduction
 
 %temperatures
 heat_transfer.T_inf = 0; % [C] ambient temperature
