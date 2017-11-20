@@ -7,7 +7,7 @@ clc
 options.convection_nat = false; % set true for natural convection
 options.convection_for = true; % set true for forced convection
 options.conduction_ver = true; % set true for vertebrae conduction
-options.conduction_windshield = false; % set true for windshied conduction
+options.conduction_windshield = true; % set true for windshied conduction
 
 %temperatures
 heat_transfer.T_inf = 0; % [C] ambient temperature
@@ -17,7 +17,7 @@ heat_transfer.T_rubber_init = -1 ; % [C] initial temperature of rubber
 heat_transfer.T_windshield=4; % [C] temperature of the windshield
 
 %simulation_object(length,t,delta_x,cp,k_conduction,rho)
-rubber = simulation_object(0.01,0.005,0.0005,2100,0.16,1100);
+rubber = simulation_object(0.01,0.005,0.001,2100,0.16,1100);
 
 sim_time=2000; % [s] 
 
@@ -79,4 +79,9 @@ end
     title('Average Temperature Development');
     xlabel('Time [s]');
     ylabel('Average Node Temperature');
+    
+    mesh(output);
+    
+    
+   
 
