@@ -7,33 +7,34 @@ classdef simulation_object
     % and back area are not exposed because the material continues in that
     % direction. The exposed area is used for convection boundary
     % conditions. The edje of the wall that defines the exposed area could
-    % be of any length, then the area corresponding to one node would grow,
+    % be of any height, then the area corresponding to one node would grow,
     % but the mass corresponding to the node would also grow
-    % proportionally. For simplicity we can just assume this edje to be ?x.
+    % proportionally. 
     % as a result the cross section of the object is a rectangle of edge
-    % length ?x and t and each nodes coresponds to a cuboid of dimensions
-    % ?x*?x*t. t is the thickness of the wall and should be defined 
+    % height L and t and each node coresponds to a cuboid of dimensions
+    % L*dx*t. t is the thickness of the wall and should be defined 
     % according to the thickness or the average thickness of the wall
     %In this case, the totax exposed surface would be 2*?x*L
-    %            ______            _         ______ 
-    % -->      /      /| <--        |      /      /|
-    % -->     /_____ /x| <--        |     /______/ |?x
-    % -->    |   0  |xx| <--        |    |    0  | /  <- volume for 1 node
-    % -->    |   |  |xx| <--        |    |_______|/ ?x 
-    % -->    |   0  |xx| <--        | L       t
-    % -->    |   |  |xx| <--        |
+    %            ______            _             _______ 
+    % -->      /      /| <--        |           /      /|
+    % -->     /_____ /x| <--        |          /      / |  Delta_x
+    % -->    |   0  |xx| <--        |         /    0 / /  <- volume for 1 node
+    % -->    |   |  |xx| <--        |        /______/ / L 
+    % -->    |   0  |xx| <--        | height|_______|/  
+    % -->    |   |  |xx| <--        |           t
     % -->    |   0  |xx| <--        |
     % -->    |   |  |xx| <--        |
     % -->    |   0  |x/  <--       _|    
-    % -->    |______|/ ?x               
+    % -->    |______|/ L               
     %            t
     properties
     
     %geometric properties
-    length;  %[m] length from top to bottom of the profile (1D dimension)
+    height;  %[m] height from top to bottom of the profile (1D dimension)
+    length; % [m] total length in the logitudinal direction. direction where the profile has constant shape
     exposed_area; % [m^2] area of the simulated 1D object that is in contact with (see figure)
     thickness; % [m] thickness of the cross-section
-    delta_x; % [m] Length of th cross section.
+    delta_x; % [m] height of th cross section.
     volume; % [m^3]
     mass; %[kg]
     
@@ -51,21 +52,22 @@ classdef simulation_object
     end
     
     methods
-        function obj=simulation_object(length,t,delta_x,cp,k_conduction,rho)
+        function obj=simulation_object(height,length,t,delta_x,cp,k_conduction,rho)
             obj.cp = cp;
             obj.k_conduction = k_conduction;
             obj.rho = rho;
             obj.alpha=k_conduction/(cp*rho);
             obj.thickness=t;
+            obj.height=height;
             obj.length=length;
-            obj.exposed_area= 2*length*delta_x;
+            obj.exposed_area= 2*height*length;
             obj.delta_x=delta_x;
-            obj.volume=delta_x*t*length;
-            obj.mass = delta_x*t*length*rho;
-            obj.nodes= length/delta_x;
-            obj.node_mass= delta_x*delta_x*t*rho;
-            obj.node_volume=delta_x*delta_x*t;
-            obj.node_exposed_area= 2*delta_x*delta_x;
+            obj.volume=length*t*height;
+            obj.mass = length*t*height*rho;
+            obj.nodes= height/delta_x;
+            obj.node_mass= length*delta_x*t*rho;
+            obj.node_volume=length*delta_x*t;
+            obj.node_exposed_area= 2*length*delta_x;
         end
     end
     

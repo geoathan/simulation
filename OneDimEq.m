@@ -18,11 +18,11 @@ T_dot=zeros(rubber.nodes,1); %initialize output table size by defining a zero ta
 %Internal conduction 
 %dT/dt = (T_m-1 - 2*T_m + T_m+1)*a/(delta_x)^2 , where a=k/(rho*cp)
 %equation 5-43 , page 334 , Cengel - Heat Transfer
-T_dot(1,1)=((P(2)-P(1))*rubber.alpha)/(rubber.delta_x^2);
+T_dot(1,1)=((P(2)-P(1))*rubber.alpha)/(rubber.delta_x^2); %first node
     for i = 2 : rubber.nodes-1
         T_dot(i,1)=((P(i+1)+P(i-1)-2*P(i))*rubber.alpha)/(rubber.delta_x^2); % derived from Fourrier eq. the differential for each node is proportional to the difeerence of temperature with it's neighbouring nodes times difussivity divided by delta_x
     end
-T_dot(rubber.nodes,1)=((P(rubber.nodes-1)-P(rubber.nodes))*rubber.alpha)/(rubber.delta_x^2);
+T_dot(rubber.nodes,1)=((P(rubber.nodes-1)-P(rubber.nodes))*rubber.alpha)/(rubber.delta_x^2); %last node
 
 %convection
 if (options.convection_nat)
@@ -48,15 +48,17 @@ end
 
 if (options.conduction_ver) 
     if (heat_transfer.conduction1.mode) %fixing temperatures for vertebrae if we have constant temperature boundary
-%condition
+%conduction
         for i = heat_transfer.conduction1.node_start : heat_transfer.conduction1.node_end
            T_dot(i,1)=0;
         end
-    else
+    else % script for constant heat input
+        cond_tabl=zeros(rubber.nodes,1); % initializion of table with differential temperatures due to constant Q
         for i = heat_transfer.conduction1.node_start : heat_transfer.conduction1.node_end
            q_dot_node = heat_transfer.conduction1.Q/heat_transfer.conduction1.nodes;
-           T_dot(i,1)= q_dot_node/((rubber.node_mass)*rubber.cp);
+           cond_tabl(i,1)= q_dot_node/(rubber.node_mass*rubber.cp); % q_dot = m*cp*deltaT
         end
+        T_dot=T_dot+cond_tabl(i,1);
     end
 end
     
@@ -67,10 +69,12 @@ if (options.conduction_windshield)
            T_dot(i,1)=0;
         end
     else % constant Q
+        cond_tabl=zeros(rubber.nodes,1); % initializion of table with differential temperatures due to constant Q
         for i = heat_transfer.conduction2.node_start : heat_transfer.conduction2.node_end
            q_dot_node = heat_transfer.conduction2.Q/heat_transfer.conduction2.nodes; 
-           T_dot(i,1)= q_dot_node/((rubber.node_mass)*rubber.cp);
+           cond_tabl(i,1)= q_dot_node/((rubber.node_mass)*rubber.cp);
         end
+        T_dot=T_dot+cond_tabl(i,1);
     end
 end
 
