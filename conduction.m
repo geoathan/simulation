@@ -22,8 +22,8 @@ classdef conduction
             obj.L=input_L2-input_L1;
             obj.mode=mode;
             obj.node_start = round((input_L1/total_length)*nodes);
-            obj.nodes = round(((input_L2-input_L1)/total_length)*nodes);
             obj.node_end = round((input_L2/total_length)*nodes);
+            obj.nodes = round((input_L2/total_length)*nodes)-round((input_L1/total_length)*nodes)+1 ; % because the first node is also included in the loop
             if mode
                 obj.T = input;
             else

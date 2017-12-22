@@ -58,7 +58,7 @@ if (options.conduction_ver)
            q_dot_node = heat_transfer.conduction1.Q/heat_transfer.conduction1.nodes;
            cond_tabl(i,1)= q_dot_node/(rubber.node_mass*rubber.cp); % q_dot = m*cp*deltaT
         end
-        T_dot=T_dot+cond_tabl(i,1);
+        T_dot=T_dot+cond_tabl;
     end
 end
     

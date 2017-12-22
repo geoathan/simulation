@@ -52,7 +52,7 @@ classdef simulation_object
     end
     
     methods
-        function obj=simulation_object(height,length,t,delta_x,cp,k_conduction,rho)
+        function obj=simulation_object(height,length,t,delta_x,cp,k_conduction,rho) 
             obj.cp = cp;
             obj.k_conduction = k_conduction;
             obj.rho = rho;
